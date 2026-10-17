@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;">Metrics & Analytics</h2>
+        </div>
+        
+        <div class="header-actions">
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="header-profile-dropdown">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title text-gradient">Visual Portfolio Analytics</h2>
+          <p class="dashboard-subtitle">Assess technical depth, categoric distribution, and progress trends.</p>
+        </div>
+
+        <!-- 2 Column Analytics Grid -->
+        <div class="analytics-grid">
+          <!-- Card 1: Doughnut Chart (Skill Category Distribution) -->
+          <div class="glass-card analytics-card">
+            <h3 class="card-title" style="margin-bottom: 20px;"><i class="fa-solid fa-chart-pie text-gradient"></i> Skill Distribution</h3>
+            <div class="chart-container">
+              <div class="chart-placeholder" id="category-placeholder-box" style="display:none; height:100%; align-items:center; justify-content:center;"></div>
+              <canvas id="category-doughnut-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 2: Bar Chart (Proficiency Level Distribution) -->
+          <div class="glass-card analytics-card">
+            <h3 class="card-title" style="margin-bottom: 20px;"><i class="fa-solid fa-chart-bar text-gradient"></i> Proficiency Levels</h3>
+            <div class="chart-container">
+              <div class="chart-placeholder" id="level-placeholder-box" style="display:none; height:100%; align-items:center; justify-content:center;"></div>
+              <canvas id="level-bar-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 3: Line Chart (Activity Progression Timeline) - Full Width -->
+          <div class="glass-card analytics-card full-width">
+            <h3 class="card-title" style="margin-bottom: 20px;"><i class="fa-solid fa-chart-line text-gradient"></i> Portfolio Progress Timeline</h3>
+            <div class="chart-container">
+              <div class="chart-placeholder" id="timeline-placeholder-box" style="display:none; height:100%; align-items:center; justify-content:center;"></div>
+              <canvas id="timeline-line-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extra: Metric highlights row -->
+        <div class="glass-card" style="padding:30px; margin-bottom: 20px;">
+          <h3 class="card-title" style="margin-bottom:20px;"><i class="fa-solid fa-star text-gradient"></i> Portfolio Highlights</h3>
+          <div class="widgets-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:0; gap:20px;">
+            <div class="activity-item" style="border:none; background:rgba(255,255,255,0.015); border:1px solid var(--border-card);">
+              <div class="activity-icon" style="background:var(--primary);"><i class="fa-solid fa-check"></i></div>
+              <div class="activity-info">
+                <div class="activity-text" style="font-weight:700;">Skills Strength</div>
+                <div class="activity-time" id="hi-skills-count" style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-top:2px;">0 Logs</div>
+              </div>
+            </div>
+            <div class="activity-item" style="border:none; background:rgba(255,255,255,0.015); border:1px solid var(--border-card);">
+              <div class="activity-icon" style="background:var(--secondary);"><i class="fa-solid fa-file-invoice"></i></div>
+              <div class="activity-info">
+                <div class="activity-text" style="font-weight:700;">Certificates Earned</div>
+                <div class="activity-time" id="hi-certs-count" style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-top:2px;">0 Verifications</div>
+              </div>
+            </div>
+            <div class="activity-item" style="border:none; background:rgba(255,255,255,0.015); border:1px solid var(--border-card);">
+              <div class="activity-icon" style="background:var(--color-success);"><i class="fa-solid fa-briefcase"></i></div>
+              <div class="activity-info">
+                <div class="activity-text" style="font-weight:700;">Internship Tracker</div>
+                <div class="activity-time" id="hi-interns-count" style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-top:2px;">0 Registered</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/chart.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      // 1. Initialize custom Chart.js charts
+      initAnalyticsCharts();
+
+      // 2. Load Portfolio Highlights details
+      const skillCount = user.skills ? user.skills.length : 0;
+      const certCount = user.certificates ? user.certificates.length : 0;
+      const internCount = user.internships ? user.internships.length : 0;
+
+      document.getElementById('hi-skills-count').textContent = `${skillCount} skill logs`;
+      document.getElementById('hi-certs-count').textContent = `${certCount} certifications`;
+      document.getElementById('hi-interns-count').textContent = `${internCount} logged intern roles`;
+
+      // 3. Sidebar logout action
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

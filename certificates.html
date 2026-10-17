@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificates - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;">My Certificates</h2>
+        </div>
+        
+        <div class="header-actions">
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="header-profile-dropdown">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title text-gradient">Professional Certificates</h2>
+          <p class="dashboard-subtitle">Manage, view, and store your technical training and honors files.</p>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="skills-controls-row" style="justify-content: flex-end;">
+          <button class="btn btn-primary" id="open-cert-modal-btn">
+            Upload Certificate <i class="fa-solid fa-circle-arrow-up"></i>
+          </button>
+        </div>
+
+        <!-- Certificates Grid -->
+        <div class="certificates-grid" id="certificates-container">
+          <!-- Javascript will load items here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Upload Certificate Modal -->
+  <div class="modal-overlay" id="cert-modal">
+    <div class="modal-container glass-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Upload Certificate</h3>
+        <i class="fa-solid fa-xmark modal-close" id="close-cert-modal-btn"></i>
+      </div>
+      
+      <form id="cert-modal-form" novalidate>
+        <!-- Title -->
+        <div class="form-group">
+          <label for="cert-title" class="form-label">Certificate Title *</label>
+          <input type="text" id="cert-title" class="form-control" placeholder="e.g. AWS Cloud Practitioner" required>
+          <div class="form-error-msg">Title is required</div>
+        </div>
+
+        <!-- Issuing Organization -->
+        <div class="form-group">
+          <label for="cert-org" class="form-label">Issuing Organization *</label>
+          <input type="text" id="cert-org" class="form-control" placeholder="e.g. Amazon Web Services" required>
+          <div class="form-error-msg">Issuing organization is required</div>
+        </div>
+
+        <!-- Date Issued -->
+        <div class="form-group">
+          <label for="cert-date" class="form-label">Date Issued *</label>
+          <input type="date" id="cert-date" class="form-control" required>
+          <div class="form-error-msg">Date is required</div>
+        </div>
+
+        <!-- File Upload -->
+        <div class="form-group">
+          <label for="cert-file" class="form-label">Select File (Image or PDF, Max 1.5MB) *</label>
+          <input type="file" id="cert-file" class="form-control" accept="image/*,application/pdf" required>
+          <div class="form-error-msg">Please upload a valid certificate file</div>
+          <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:5px;" id="cert-file-size-info"></p>
+        </div>
+
+        <!-- Submit buttons -->
+        <div style="display: flex; gap: 10px; margin-top: 25px;">
+          <button type="submit" class="btn btn-primary" style="flex-grow: 1;">Save Certificate</button>
+          <button type="button" class="btn btn-secondary" id="cancel-cert-modal-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lightbox Media Preview Modal -->
+  <div class="modal-overlay" id="lightbox-modal">
+    <div class="modal-container glass-card lightbox-content-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="lightbox-title">Certificate Preview</h3>
+        <i class="fa-solid fa-xmark modal-close" id="close-lightbox-btn"></i>
+      </div>
+      <div class="lightbox-body" id="lightbox-media-container">
+        <!-- Javascript will render image or iframe here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      const certModal = document.getElementById('cert-modal');
+      const certForm = document.getElementById('cert-modal-form');
+      const addBtn = document.getElementById('open-cert-modal-btn');
+      const closeBtn = document.getElementById('close-cert-modal-btn');
+      const cancelBtn = document.getElementById('cancel-cert-modal-btn');
+      const fileInput = document.getElementById('cert-file');
+
+      let uploadedBase64 = null;
+      let uploadedFileName = '';
+      let uploadedFileType = '';
+
+      // Initialize validation
+      initLiveValidation(certForm);
+
+      // Render cert cards initially
+      renderCertificates(user.certificates);
+
+      // 1. Sidebar logout action
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 2. Add button click
+      addBtn.addEventListener('click', () => {
+        toggleModal('cert-modal', true);
+      });
+
+      // 3. Close Modal handlers
+      const closeFormModal = () => {
+        toggleModal('cert-modal', false);
+        certForm.reset();
+        uploadedBase64 = null;
+        uploadedFileName = '';
+        uploadedFileType = '';
+        document.getElementById('cert-file-size-info').textContent = '';
+        const inputs = certForm.querySelectorAll('input');
+        inputs.forEach(input => clearInputError(input));
+      };
+      closeBtn.addEventListener('click', closeFormModal);
+      cancelBtn.addEventListener('click', closeFormModal);
+      certModal.addEventListener('click', (e) => {
+        if (e.target === certModal) closeFormModal();
+      });
+
+      // 4. File selection changes (read as base64)
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Size check (max 1.5MB = 1536 KB)
+        if (file.size > 1.5 * 1024 * 1024) {
+          showToast('File size exceeds 1.5MB limit. Please compress your file.', 'danger');
+          fileInput.value = '';
+          return;
+        }
+
+        const sizeInMb = (file.size / (1024 * 1024)).toFixed(2);
+        document.getElementById('cert-file-size-info').textContent = `Selected: ${file.name} (${sizeInMb} MB)`;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          uploadedBase64 = event.target.result;
+          uploadedFileName = file.name;
+          uploadedFileType = file.type;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 5. Form submission (Add)
+      certForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const isValid = validateFormOnSubmit(certForm);
+        if (!isValid) return;
+
+        if (!uploadedBase64) {
+          showInputError(fileInput, 'File has not loaded correctly. Please reselect.');
+          return;
+        }
+
+        const title = document.getElementById('cert-title').value.trim();
+        const org = document.getElementById('cert-org').value.trim();
+        const date = document.getElementById('cert-date').value;
+
+        if (!user.certificates) user.certificates = [];
+
+        const newCert = {
+          id: 'cert_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+          title,
+          org,
+          date,
+          fileName: uploadedFileName,
+          fileType: uploadedFileType,
+          fileData: uploadedBase64
+        };
+
+        user.certificates.push(newCert);
+        addActivity(`Uploaded certification: ${title}`);
+        saveCurrentUser(user);
+
+        showToast('Certificate saved successfully!', 'success');
+        closeFormModal();
+        renderCertificates(user.certificates);
+      });
+
+      // 6. Lightbox Preview Modal close handlers
+      const lightbox = document.getElementById('lightbox-modal');
+      const closeLightboxBtn = document.getElementById('close-lightbox-btn');
+      
+      const closeLightbox = () => {
+        toggleModal('lightbox-modal', false);
+        document.getElementById('lightbox-media-container').innerHTML = '';
+      };
+      closeLightboxBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // 7. Route check for Action modal opening
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('action') === 'add') {
+        toggleModal('cert-modal', true);
+      }
+
+      /**
+       * Render Certificates Grid Cards UI
+       */
+      function renderCertificates(certsList) {
+        const container = document.getElementById('certificates-container');
+        container.innerHTML = '';
+
+        if (!certsList || certsList.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 50px 10px; color: var(--text-secondary);" class="glass-card">
+              <i class="fa-solid fa-award" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+              <h3>No Certificates Logged</h3>
+              <p style="font-size: 0.95rem; margin-top: 5px;">Add awards or course certification to showcase on your profile.</p>
+            </div>
+          `;
+          return;
+        }
+
+        certsList.forEach(cert => {
+          const card = document.createElement('div');
+          card.className = 'glass-card certificate-card';
+
+          const isPdf = cert.fileType === 'application/pdf';
+          const dateStr = new Date(cert.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+          // Render Preview container depending on file format
+          let previewHtml = '';
+          if (isPdf) {
+            previewHtml = `
+              <div class="certificate-preview-icon">
+                <i class="fa-regular fa-file-pdf" style="color: var(--color-danger);"></i>
+              </div>
+            `;
+          } else {
+            previewHtml = `<img src="${cert.fileData}" alt="${escapeHTML(cert.title)}" class="certificate-preview-img">`;
+          }
+
+          card.innerHTML = `
+            <div class="certificate-preview-box">
+              ${previewHtml}
+            </div>
+            <div class="certificate-details-box">
+              <h3 class="certificate-title">${escapeHTML(cert.title)}</h3>
+              <p class="certificate-issuer">${escapeHTML(cert.org)}</p>
+              <p class="certificate-date"><i class="fa-regular fa-calendar"></i> Issued: ${dateStr}</p>
+              
+              <div class="certificate-actions-row">
+                <button class="certificate-btn btn-view" data-id="${cert.id}">
+                  <i class="fa-solid fa-eye"></i> View
+                </button>
+                <button class="certificate-btn btn-download" data-id="${cert.id}">
+                  <i class="fa-solid fa-arrow-down"></i> Get
+                </button>
+                <button class="certificate-btn btn-delete-card" data-id="${cert.id}">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          `;
+
+          // Hook View Action
+          card.querySelector('.btn-view').addEventListener('click', () => {
+            const lbContainer = document.getElementById('lightbox-media-container');
+            document.getElementById('lightbox-title').textContent = cert.title;
+
+            if (isPdf) {
+              lbContainer.innerHTML = `<iframe class="lightbox-iframe" src="${cert.fileData}"></iframe>`;
+            } else {
+              lbContainer.innerHTML = `<img class="lightbox-img" src="${cert.fileData}" alt="${cert.title}">`;
+            }
+            toggleModal('lightbox-modal', true);
+          });
+
+          // Hook Download Action
+          card.querySelector('.btn-download').addEventListener('click', () => {
+            const dl = document.createElement('a');
+            dl.href = cert.fileData;
+            dl.download = cert.fileName || 'certificate';
+            document.body.appendChild(dl);
+            dl.click();
+            document.body.removeChild(dl);
+            showToast(`Downloading: ${cert.fileName}`, 'success');
+          });
+
+          // Hook Delete Action
+          card.querySelector('.btn-delete-card').addEventListener('click', () => {
+            showConfirmModal('Delete Certificate', `Are you sure you want to delete the certification "${cert.title}"?`, () => {
+              user.certificates = user.certificates.filter(c => c.id !== cert.id);
+              saveCurrentUser(user);
+              addActivity(`Deleted certificate: ${cert.title}`);
+              showToast(`Certificate "${cert.title}" removed!`, 'warning');
+              renderCertificates(user.certificates);
+            });
+          });
+
+          container.appendChild(card);
+        });
+      }
+
+      /**
+       * Simple HTML encoder
+       */
+      function escapeHTML(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+    });
+  </script>
+</body>
+</html>

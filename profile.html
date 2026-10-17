@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;">My Profile</h2>
+        </div>
+        
+        <div class="header-actions">
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="header-profile-dropdown">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title text-gradient">Manage Student Profile</h2>
+          <p class="dashboard-subtitle">Keep your academic status, branch, and contact information updated.</p>
+        </div>
+
+        <!-- Profile Grid -->
+        <div class="profile-grid">
+          <!-- Left Column: Summary Card -->
+          <div class="glass-card profile-sidebar-card">
+            <!-- Avatar Edit box -->
+            <div class="profile-avatar-wrapper">
+              <img src="" alt="User Avatar" class="profile-avatar" id="sidebar-avatar-img">
+              <label for="avatar-file-input" class="profile-avatar-overlay">
+                <i class="fa-solid fa-camera" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
+                <span>Upload Photo</span>
+              </label>
+              <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+            </div>
+
+            <h3 class="profile-name" id="sidebar-profile-name"></h3>
+            <p class="profile-branch" id="sidebar-profile-branch"></p>
+            
+            <p class="profile-bio" id="sidebar-profile-bio"></p>
+
+            <div class="profile-quick-details">
+              <div class="profile-quick-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span id="sidebar-profile-email"></span>
+              </div>
+              <div class="profile-quick-item">
+                <i class="fa-solid fa-phone"></i>
+                <span id="sidebar-profile-phone"></span>
+              </div>
+              <div class="profile-quick-item">
+                <i class="fa-solid fa-building-columns"></i>
+                <span id="sidebar-profile-college"></span>
+              </div>
+              <div class="profile-quick-item">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span id="sidebar-profile-semester"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Form Card -->
+          <div class="glass-card profile-form-card">
+            <h3 class="card-title" style="margin-bottom: 25px;"><i class="fa-solid fa-user-pen text-gradient"></i> Edit Profile Details</h3>
+            
+            <form id="edit-profile-form" novalidate>
+              <div class="register-grid">
+                <!-- Name -->
+                <div class="form-group">
+                  <label for="fullName" class="form-label">Full Name *</label>
+                  <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+                  <div class="form-error-msg">Full Name is required</div>
+                </div>
+
+                <!-- Email (Readonly for account integrity, can be changed via DB if needed) -->
+                <div class="form-group">
+                  <label for="email" class="form-label">Email Address (Readonly)</label>
+                  <input type="email" id="email" class="form-control" style="opacity: 0.65; cursor: not-allowed;" readonly>
+                </div>
+
+                <!-- Mobile -->
+                <div class="form-group">
+                  <label for="mobile" class="form-label">Mobile Number *</label>
+                  <input type="tel" id="mobile" class="form-control" placeholder="9876543210" required>
+                  <div class="form-error-msg">Enter a valid 10-digit number</div>
+                </div>
+
+                <!-- College Name -->
+                <div class="form-group">
+                  <label for="college" class="form-label">College Name *</label>
+                  <input type="text" id="college" class="form-control" placeholder="University of Technology" required>
+                  <div class="form-error-msg">College Name is required</div>
+                </div>
+
+                <!-- Branch -->
+                <div class="form-group">
+                  <label for="branch" class="form-label">Branch/Specialization *</label>
+                  <input type="text" id="branch" class="form-control" placeholder="Computer Science Engineering" required>
+                  <div class="form-error-msg">Branch is required</div>
+                </div>
+
+                <!-- Semester -->
+                <div class="form-group">
+                  <label for="semester" class="form-label">Semester *</label>
+                  <select id="semester" class="form-control" required>
+                    <option value="" disabled>Select Semester</option>
+                    <option value="1st Semester">1st Semester</option>
+                    <option value="2nd Semester">2nd Semester</option>
+                    <option value="3rd Semester">3rd Semester</option>
+                    <option value="4th Semester">4th Semester</option>
+                    <option value="5th Semester">5th Semester</option>
+                    <option value="6th Semester">6th Semester</option>
+                    <option value="7th Semester">7th Semester</option>
+                    <option value="8th Semester">8th Semester</option>
+                  </select>
+                  <div class="form-error-msg">Semester selection is required</div>
+                </div>
+              </div>
+
+              <!-- About Me / Bio -->
+              <div class="form-group" style="margin-top: 10px;">
+                <label for="aboutMe" class="form-label">About Me (Bio)</label>
+                <textarea id="aboutMe" class="form-control" style="resize: none; height: 110px;" placeholder="Tell us about yourself, research areas, or career goals..."></textarea>
+              </div>
+
+              <!-- Buttons -->
+              <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button type="submit" class="btn btn-primary">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
+                <button type="button" class="btn btn-secondary" id="reset-profile-btn">Reset Fields</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      const profileForm = document.getElementById('edit-profile-form');
+      const avatarInput = document.getElementById('avatar-file-input');
+
+      // Initialize fields on load
+      populateProfileFields(user);
+      initLiveValidation(profileForm);
+
+      // 1. Sidebar logout action
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 2. Avatar upload handler
+      avatarInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Verify image type
+        if (!file.type.startsWith('image/')) {
+          showToast('Invalid file format. Please upload an image file.', 'danger');
+          return;
+        }
+
+        // Limit user avatar file size to 400KB to fit LocalStorage limits safely
+        if (file.size > 400 * 1024) {
+          showToast('Image size too large. Please select a photo smaller than 400KB.', 'danger');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64Data = event.target.result;
+          
+          // Save and Update avatar in DB
+          user.avatar = base64Data;
+          saveCurrentUser(user);
+          addActivity('Uploaded a new profile picture');
+          
+          // Re-render UI elements
+          document.getElementById('sidebar-avatar-img').src = base64Data;
+          document.querySelector('.header-profile-avatar').src = base64Data;
+          showToast('Profile photo updated successfully!', 'success');
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 3. Form submission
+      profileForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const isValid = validateFormOnSubmit(profileForm);
+        if (!isValid) {
+          showToast('Please resolve validation errors on the form.', 'warning');
+          return;
+        }
+
+        // Gather edits
+        user.fullName = document.getElementById('fullName').value.trim();
+        user.mobile = document.getElementById('mobile').value.trim();
+        user.college = document.getElementById('college').value.trim();
+        user.branch = document.getElementById('branch').value.trim();
+        user.semester = document.getElementById('semester').value;
+        user.aboutMe = document.getElementById('aboutMe').value.trim();
+
+        // Update DB
+        saveCurrentUser(user);
+        addActivity('Updated profile card information');
+
+        // Re-populate and display toast
+        populateProfileFields(user);
+        loadHeaderUserInfo(); // Sync dashboard header info
+        showToast('Profile details updated successfully!', 'success');
+      });
+
+      // 4. Reset Button Action
+      document.getElementById('reset-profile-btn').addEventListener('click', () => {
+        populateProfileFields(user);
+        showToast('Form fields reset to current values.', 'info');
+      });
+    });
+
+    /**
+     * Map active student variables to inputs and sidebar details
+     */
+    function populateProfileFields(user) {
+      // Sidebar card
+      document.getElementById('sidebar-avatar-img').src = user.avatar || getDefaultAvatarSVG(user.fullName);
+      document.getElementById('sidebar-profile-name').textContent = user.fullName;
+      document.getElementById('sidebar-profile-branch').textContent = user.branch ? `${user.branch} | ${user.semester}` : 'Student';
+      document.getElementById('sidebar-profile-bio').textContent = user.aboutMe || '';
+      document.getElementById('sidebar-profile-email').textContent = user.email;
+      document.getElementById('sidebar-profile-phone').textContent = user.mobile || 'Not Configured';
+      document.getElementById('sidebar-profile-college').textContent = user.college || 'Not Configured';
+      document.getElementById('sidebar-profile-semester').textContent = user.semester || 'Not Configured';
+
+      // Edit Form inputs
+      document.getElementById('fullName').value = user.fullName;
+      document.getElementById('email').value = user.email;
+      document.getElementById('mobile').value = user.mobile || '';
+      document.getElementById('college').value = user.college || '';
+      document.getElementById('branch').value = user.branch || '';
+      document.getElementById('semester').value = user.semester || '';
+      document.getElementById('aboutMe').value = user.aboutMe || '';
+    }
+  </script>
+</body>
+</html>

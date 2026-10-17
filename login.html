@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="auth-page">
+    <div class="glass-card auth-card">
+      <div class="auth-header">
+        <div class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 2.2rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </div>
+        <h2>Welcome Back</h2>
+        <p>Login to track your college internship and skills progression</p>
+      </div>
+
+      <form id="login-form" novalidate>
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address *</label>
+          <input type="email" id="email" class="form-control" placeholder="student@college.edu" required>
+          <div class="form-error-msg">Please enter a valid email address</div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password *</label>
+          <div class="form-control-icon-wrapper">
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            <i class="fa-solid fa-eye form-icon-btn toggle-password-visibility" data-target="password"></i>
+          </div>
+          <div class="form-error-msg">Password must be at least 8 characters long</div>
+        </div>
+
+        <!-- Remember Me Row -->
+        <div class="auth-remember-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember-me" class="remember-me-checkbox">
+            Remember Me
+          </label>
+          <a href="#" id="forgot-password-link">Forgot Password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary auth-submit-btn">
+          Login <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </button>
+      </form>
+
+      <!-- Auth Card Footer -->
+      <div class="auth-footer">
+        Don't have an account? <a href="register.html">Register here</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgot-password-modal">
+    <div class="modal-container glass-card">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-key text-gradient"></i> Reset Password</h3>
+        <i class="fa-solid fa-xmark modal-close" id="close-forgot-modal"></i>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">
+        Enter your registered email address and set your new password below.
+      </p>
+
+      <form id="forgot-password-form" novalidate>
+        <!-- Registered Email -->
+        <div class="form-group">
+          <label for="forgot-email" class="form-label">Registered Email Address *</label>
+          <input type="email" id="forgot-email" class="form-control" placeholder="student@college.edu" required>
+          <div class="form-error-msg">Please enter a valid registered email address</div>
+        </div>
+
+        <!-- New Password -->
+        <div class="form-group">
+          <label for="forgot-new-password" class="form-label">New Password *</label>
+          <div class="form-control-icon-wrapper">
+            <input type="password" id="forgot-new-password" class="form-control" placeholder="Min. 8 characters" required>
+            <i class="fa-solid fa-eye form-icon-btn toggle-password-visibility" data-target="forgot-new-password"></i>
+          </div>
+          <div class="form-error-msg">Password must be at least 8 characters long</div>
+        </div>
+
+        <!-- Confirm New Password -->
+        <div class="form-group">
+          <label for="forgot-confirm-password" class="form-label">Confirm New Password *</label>
+          <div class="form-control-icon-wrapper">
+            <input type="password" id="forgot-confirm-password" class="form-control" placeholder="Re-type new password" required>
+            <i class="fa-solid fa-eye form-icon-btn toggle-password-visibility" data-target="forgot-confirm-password"></i>
+          </div>
+          <div class="form-error-msg">Passwords do not match</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit-btn" style="margin-top: 10px;">
+          Reset Password <i class="fa-solid fa-check"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('login-form');
+      const forgotForm = document.getElementById('forgot-password-form');
+      const togglePasswordIcons = document.querySelectorAll('.toggle-password-visibility');
+      const rememberCheckbox = document.getElementById('remember-me');
+      const emailInput = document.getElementById('email');
+
+      // 1. Initialize validation on input tags
+      initLiveValidation(loginForm);
+      initLiveValidation(forgotForm);
+
+      // 2. Pre-fill email if Remember Me was selected previously
+      const savedEmail = localStorage.getItem('sst_remember_email');
+      if (savedEmail) {
+        emailInput.value = savedEmail;
+        rememberCheckbox.checked = true;
+      }
+
+      // 3. Show/Hide Password functionality for all password fields
+      togglePasswordIcons.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const passwordInput = document.getElementById(toggle.getAttribute('data-target'));
+          if (passwordInput) {
+            if (passwordInput.type === 'password') {
+              passwordInput.type = 'text';
+              toggle.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+              passwordInput.type = 'password';
+              toggle.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+          }
+        });
+      });
+
+      // 4. Login Form Submit handler
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Perform validation
+        const isValid = validateFormOnSubmit(loginForm);
+        if (!isValid) return;
+
+        const email = emailInput.value.trim();
+        const password = document.getElementById('password').value;
+
+        // Perform login check
+        const success = loginUser(email, password);
+
+        if (success) {
+          // Handle remember me logic
+          if (rememberCheckbox.checked) {
+            localStorage.setItem('sst_remember_email', email);
+          } else {
+            localStorage.removeItem('sst_remember_email');
+          }
+
+          // Show success and redirect
+          showToast('Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1200);
+        } else {
+          showToast('Invalid email or password. Please try again.', 'danger');
+          showInputError(emailInput, 'Invalid credentials');
+          showInputError(document.getElementById('password'), 'Invalid credentials');
+        }
+      });
+
+      // 5. Forgot Password Modal Triggers & Reset Form Handler
+      const forgotModal = document.getElementById('forgot-password-modal');
+      const forgotLink = document.getElementById('forgot-password-link');
+      const closeForgotBtn = document.getElementById('close-forgot-modal');
+      const forgotEmailInput = document.getElementById('forgot-email');
+      const forgotNewPasswordInput = document.getElementById('forgot-new-password');
+      const forgotConfirmPasswordInput = document.getElementById('forgot-confirm-password');
+
+      forgotLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Pre-fill email if already entered in login form
+        if (emailInput.value.trim()) {
+          forgotEmailInput.value = emailInput.value.trim();
+        }
+        toggleModal('forgot-password-modal', true);
+      });
+
+      closeForgotBtn.addEventListener('click', () => {
+        toggleModal('forgot-password-modal', false);
+      });
+
+      forgotModal.addEventListener('click', (e) => {
+        if (e.target === forgotModal) {
+          toggleModal('forgot-password-modal', false);
+        }
+      });
+
+      forgotForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const email = forgotEmailInput.value.trim();
+        const newPassword = forgotNewPasswordInput.value;
+        const confirmPassword = forgotConfirmPasswordInput.value;
+
+        let hasError = false;
+
+        if (!email || !isValidEmail(email)) {
+          showInputError(forgotEmailInput, 'Please enter a valid email address');
+          hasError = true;
+        }
+
+        const users = getUsers();
+        const userExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
+
+        if (!hasError && !userExists) {
+          showInputError(forgotEmailInput, 'No account found with this email address');
+          hasError = true;
+        }
+
+        if (!newPassword || newPassword.length < 8) {
+          showInputError(forgotNewPasswordInput, 'Password must be at least 8 characters long');
+          hasError = true;
+        }
+
+        if (newPassword !== confirmPassword) {
+          showInputError(forgotConfirmPasswordInput, 'Passwords do not match');
+          hasError = true;
+        }
+
+        if (hasError) return;
+
+        // Perform password update in storage
+        const resetSuccess = resetUserPassword(email, newPassword);
+
+        if (resetSuccess) {
+          showToast('Password reset successfully! Please log in with your new password.', 'success');
+          toggleModal('forgot-password-modal', false);
+          
+          // Pre-fill email and clear inputs
+          emailInput.value = email;
+          document.getElementById('password').value = '';
+          forgotForm.reset();
+          document.getElementById('password').focus();
+        } else {
+          showToast('Failed to reset password. Please check your credentials.', 'danger');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

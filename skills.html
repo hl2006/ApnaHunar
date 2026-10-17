@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Skills - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;">My Skills</h2>
+        </div>
+        
+        <div class="header-actions">
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="header-profile-dropdown">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title text-gradient">Manage Skills Inventory</h2>
+          <p class="dashboard-subtitle">Log, filter, search, and update your academic/professional capabilities.</p>
+        </div>
+
+        <!-- Controls row: Search & Add -->
+        <div class="skills-controls-row">
+          <div class="header-search" style="display: flex; width: 320px;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="skills-search-input" placeholder="Search skill by name...">
+          </div>
+
+          <button class="btn btn-primary" id="open-add-skill-modal-btn">
+            Add Skill <i class="fa-solid fa-circle-plus"></i>
+          </button>
+        </div>
+
+        <!-- Filter tabs bar -->
+        <div style="margin-bottom: 25px; overflow-x: auto; width: 100%;">
+          <ul class="skills-filter-tabs" id="skills-category-tabs">
+            <li class="filter-tab active" data-category="All">All</li>
+            <li class="filter-tab" data-category="Programming">Programming</li>
+            <li class="filter-tab" data-category="Web Development">Web Development</li>
+            <li class="filter-tab" data-category="Data Science">Data Science</li>
+            <li class="filter-tab" data-category="AI/ML">AI/ML</li>
+            <li class="filter-tab" data-category="Database">Database</li>
+            <li class="filter-tab" data-category="Cloud">Cloud</li>
+            <li class="filter-tab" data-category="Soft Skills">Soft Skills</li>
+            <li class="filter-tab" data-category="Others">Others</li>
+          </ul>
+        </div>
+
+        <!-- Skills Cards list -->
+        <div class="skills-grid" id="skills-cards-container">
+          <!-- Javascript will inject items here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Skill Modal overlay -->
+  <div class="modal-overlay" id="skill-modal">
+    <div class="modal-container glass-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="skill-modal-title">Add Skill</h3>
+        <i class="fa-solid fa-xmark modal-close" id="close-skill-modal-btn"></i>
+      </div>
+      
+      <form id="skill-modal-form" novalidate>
+        <input type="hidden" id="edit-skill-id">
+        
+        <!-- Skill Name -->
+        <div class="form-group">
+          <label for="skill-name" class="form-label">Skill Name *</label>
+          <input type="text" id="skill-name" class="form-control" placeholder="e.g. JavaScript, Python" required>
+          <div class="form-error-msg">Skill name is required</div>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="skill-category" class="form-label">Category *</label>
+          <select id="skill-category" class="form-control" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="Programming">Programming</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Data Science">Data Science</option>
+            <option value="AI/ML">AI/ML</option>
+            <option value="Database">Database</option>
+            <option value="Cloud">Cloud</option>
+            <option value="Soft Skills">Soft Skills</option>
+            <option value="Others">Others</option>
+          </select>
+          <div class="form-error-msg">Please select a category</div>
+        </div>
+
+        <!-- Level -->
+        <div class="form-group">
+          <label for="skill-level" class="form-label">Proficiency Level *</label>
+          <select id="skill-level" class="form-control" required>
+            <option value="" disabled selected>Select Level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+          <div class="form-error-msg">Please select your proficiency level</div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div style="display: flex; gap: 10px; margin-top: 25px;">
+          <button type="submit" class="btn btn-primary" style="flex-grow: 1;" id="skill-form-submit-btn">Save Skill</button>
+          <button type="button" class="btn btn-secondary" id="cancel-skill-modal-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      const modal = document.getElementById('skill-modal');
+      const modalForm = document.getElementById('skill-modal-form');
+      const addBtn = document.getElementById('open-add-skill-modal-btn');
+      const closeBtn = document.getElementById('close-skill-modal-btn');
+      const cancelBtn = document.getElementById('cancel-skill-modal-btn');
+      const searchInput = document.getElementById('skills-search-input');
+      const categoryTabs = document.getElementById('skills-category-tabs');
+
+      let currentCategoryFilter = 'All';
+
+      // Initialize live validation
+      initLiveValidation(modalForm);
+
+      // Render all cards initially
+      renderSkills(user.skills);
+
+      // 1. Sidebar logout action
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 2. Open Add Modal
+      addBtn.addEventListener('click', () => {
+        openSkillModal();
+      });
+
+      // 3. Close Modal handlers
+      const closeModal = () => {
+        toggleModal('skill-modal', false);
+        modalForm.reset();
+        document.getElementById('edit-skill-id').value = '';
+        const inputs = modalForm.querySelectorAll('input, select');
+        inputs.forEach(input => clearInputError(input));
+      };
+      closeBtn.addEventListener('click', closeModal);
+      cancelBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // 4. Modal Form submission (Add/Edit)
+      modalForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const isValid = validateFormOnSubmit(modalForm);
+        if (!isValid) return;
+
+        const skillId = document.getElementById('edit-skill-id').value;
+        const name = document.getElementById('skill-name').value.trim();
+        const category = document.getElementById('skill-category').value;
+        const level = document.getElementById('skill-level').value;
+
+        if (!user.skills) user.skills = [];
+
+        if (skillId) {
+          // EDIT existing skill
+          const idx = user.skills.findIndex(s => s.id === skillId);
+          if (idx !== -1) {
+            user.skills[idx] = { id: skillId, name, category, level };
+            addActivity(`Updated skill: ${name} to ${level}`);
+            showToast('Skill updated successfully!', 'success');
+          }
+        } else {
+          // ADD new skill
+          const newSkill = {
+            id: 'sk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+            name,
+            category,
+            level
+          };
+          user.skills.push(newSkill);
+          addActivity(`Added a new skill: ${name} (${level})`);
+          showToast('New skill logged!', 'success');
+        }
+
+        saveCurrentUser(user);
+        closeModal();
+        applyFiltersAndSearch();
+      });
+
+      // 5. Category Tabs filtering
+      categoryTabs.addEventListener('click', (e) => {
+        const tab = e.target.closest('.filter-tab');
+        if (!tab) return;
+        
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        currentCategoryFilter = tab.getAttribute('data-category');
+        applyFiltersAndSearch();
+      });
+
+      // 6. Search filtering (live update on keyup)
+      searchInput.addEventListener('input', () => {
+        applyFiltersAndSearch();
+      });
+
+      // 7. Route Queries check (?search=... or ?action=add)
+      const urlParams = new URLSearchParams(window.location.search);
+      const querySearch = urlParams.get('search');
+      const action = urlParams.get('action');
+
+      if (querySearch) {
+        searchInput.value = decodeURIComponent(querySearch);
+        applyFiltersAndSearch();
+      }
+      if (action === 'add') {
+        openSkillModal();
+      }
+
+      /**
+       * Execute filter category + live search together
+       */
+      function applyFiltersAndSearch() {
+        const query = searchInput.value.toLowerCase().trim();
+        let filtered = user.skills || [];
+
+        // Category Filter
+        if (currentCategoryFilter !== 'All') {
+          filtered = filtered.filter(s => s.category === currentCategoryFilter);
+        }
+
+        // Search Filter
+        if (query) {
+          filtered = filtered.filter(s => s.name.toLowerCase().includes(query));
+        }
+
+        renderSkills(filtered);
+      }
+
+      /**
+       * Render Skills Grid UI
+       */
+      function renderSkills(skillsList) {
+        const container = document.getElementById('skills-cards-container');
+        container.innerHTML = '';
+
+        if (!skillsList || skillsList.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 50px 10px; color: var(--text-secondary);" class="glass-card">
+              <i class="fa-solid fa-code-merge" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+              <h3>No Skills Found</h3>
+              <p style="font-size: 0.95rem; margin-top: 5px;">We couldn't find any logged skills matching your criteria. Try adding one!</p>
+            </div>
+          `;
+          return;
+        }
+
+        skillsList.forEach(skill => {
+          const card = document.createElement('div');
+          card.className = 'glass-card skill-card';
+          
+          // Determine percentage fill
+          let levelPercent = 33;
+          if (skill.level === 'Intermediate') levelPercent = 66;
+          if (skill.level === 'Advanced') levelPercent = 100;
+
+          card.innerHTML = `
+            <div class="skill-card-header">
+              <div class="skill-title-group">
+                <h3>${escapeHTML(skill.name)}</h3>
+                <span class="skill-category-badge">${skill.category}</span>
+              </div>
+              <div class="skill-actions">
+                <i class="fa-solid fa-pen-to-square skill-action-btn btn-edit" data-id="${skill.id}"></i>
+                <i class="fa-solid fa-trash-can skill-action-btn btn-delete" data-id="${skill.id}"></i>
+              </div>
+            </div>
+            
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>${skill.level}</span>
+            </div>
+            <div class="skill-level-bar-bg">
+              <div class="skill-level-bar-fill" style="width: ${levelPercent}%;"></div>
+            </div>
+          `;
+
+          // Add Event Listeners for actions
+          card.querySelector('.btn-edit').addEventListener('click', () => {
+            openSkillModal(skill);
+          });
+
+          card.querySelector('.btn-delete').addEventListener('click', () => {
+            showConfirmModal('Delete Skill', `Are you sure you want to delete "${skill.name}" from your portfolio?`, () => {
+              user.skills = user.skills.filter(s => s.id !== skill.id);
+              saveCurrentUser(user);
+              addActivity(`Deleted skill: ${skill.name}`);
+              showToast(`Deleted skill "${skill.name}"`, 'warning');
+              applyFiltersAndSearch();
+            });
+          });
+
+          container.appendChild(card);
+        });
+      }
+
+      /**
+       * Open the Modal for Adding/Editing
+       */
+      function openSkillModal(skill = null) {
+        if (skill) {
+          // Edit Mode
+          document.getElementById('skill-modal-title').textContent = 'Edit Skill';
+          document.getElementById('edit-skill-id').value = skill.id;
+          document.getElementById('skill-name').value = skill.name;
+          document.getElementById('skill-category').value = skill.category;
+          document.getElementById('skill-level').value = skill.level;
+          document.getElementById('skill-form-submit-btn').textContent = 'Update Skill';
+        } else {
+          // Add Mode
+          document.getElementById('skill-modal-title').textContent = 'Add Skill';
+          document.getElementById('edit-skill-id').value = '';
+          document.getElementById('skill-name').value = '';
+          document.getElementById('skill-category').value = '';
+          document.getElementById('skill-level').value = '';
+          document.getElementById('skill-form-submit-btn').textContent = 'Save Skill';
+        }
+        toggleModal('skill-modal', true);
+      }
+
+      /**
+       * Escape inputs to prevent basic XSS
+       */
+      function escapeHTML(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="auth-page">
+    <div class="glass-card auth-card auth-register-card">
+      <div class="auth-header">
+        <div class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 2.2rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </div>
+        <h2>Create Account</h2>
+        <p>Start tracking your academic skills and internship milestones today</p>
+      </div>
+
+      <form id="register-form" novalidate>
+        <div class="register-grid">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="fullName" class="form-label">Full Name *</label>
+            <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+            <div class="form-error-msg">Full Name is required</div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address *</label>
+            <input type="email" id="email" class="form-control" placeholder="john.doe@college.edu" required>
+            <div class="form-error-msg">Please enter a valid email address</div>
+          </div>
+
+          <!-- Mobile Number -->
+          <div class="form-group">
+            <label for="mobile" class="form-label">Mobile Number *</label>
+            <input type="tel" id="mobile" class="form-control" placeholder="9876543210" required>
+            <div class="form-error-msg">Please enter a valid 10-digit number</div>
+          </div>
+
+          <!-- College Name -->
+          <div class="form-group">
+            <label for="college" class="form-label">College Name *</label>
+            <input type="text" id="college" class="form-control" placeholder="University of Technology" required>
+            <div class="form-error-msg">College Name is required</div>
+          </div>
+
+          <!-- Branch -->
+          <div class="form-group">
+            <label for="branch" class="form-label">Branch/Specialization *</label>
+            <input type="text" id="branch" class="form-control" placeholder="Computer Science Engineering" required>
+            <div class="form-error-msg">Branch is required</div>
+          </div>
+
+          <!-- Semester -->
+          <div class="form-group">
+            <label for="semester" class="form-label">Semester *</label>
+            <select id="semester" class="form-control" required>
+              <option value="" disabled selected>Select Semester</option>
+              <option value="1st Semester">1st Semester</option>
+              <option value="2nd Semester">2nd Semester</option>
+              <option value="3rd Semester">3rd Semester</option>
+              <option value="4th Semester">4th Semester</option>
+              <option value="5th Semester">5th Semester</option>
+              <option value="6th Semester">6th Semester</option>
+              <option value="7th Semester">7th Semester</option>
+              <option value="8th Semester">8th Semester</option>
+            </select>
+            <div class="form-error-msg">Semester selection is required</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password" class="form-label">Password *</label>
+            <div class="form-control-icon-wrapper">
+              <input type="password" id="password" class="form-control" placeholder="Min. 8 characters" required>
+              <i class="fa-solid fa-eye form-icon-btn toggle-password-visibility" data-target="password"></i>
+            </div>
+            <div class="form-error-msg">Password must be at least 8 characters long</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+            <div class="form-control-icon-wrapper">
+              <input type="password" id="confirmPassword" class="form-control" placeholder="Retype password" required>
+              <i class="fa-solid fa-eye form-icon-btn toggle-password-visibility" data-target="confirmPassword"></i>
+            </div>
+            <div class="form-error-msg">Passwords do not match</div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary auth-submit-btn" style="margin-top: 10px;">
+          Register Account <i class="fa-solid fa-user-plus"></i>
+        </button>
+      </form>
+
+      <!-- Auth Card Footer -->
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Login here</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const registerForm = document.getElementById('register-form');
+      const togglePasswordIcons = document.querySelectorAll('.toggle-password-visibility');
+
+      // 1. Initialize live validation
+      initLiveValidation(registerForm);
+
+      // 2. Setup Password visibility toggle icons
+      togglePasswordIcons.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const passwordInput = document.getElementById(toggle.getAttribute('data-target'));
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggle.classList.replace('fa-eye', 'fa-eye-slash');
+          } else {
+            passwordInput.type = 'password';
+            toggle.classList.replace('fa-eye-slash', 'fa-eye');
+          }
+        });
+      });
+
+      // 3. Form Submit Handler
+      registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Perform validation
+        const isValid = validateFormOnSubmit(registerForm);
+        if (!isValid) {
+          showToast('Please correct validation errors on the form.', 'warning');
+          return;
+        }
+
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const mobile = document.getElementById('mobile').value.trim();
+        const college = document.getElementById('college').value.trim();
+        const branch = document.getElementById('branch').value.trim();
+        const semester = document.getElementById('semester').value;
+        const password = document.getElementById('password').value;
+
+        // Perform registration
+        const isRegistered = registerUser({
+          fullName,
+          email,
+          mobile,
+          college,
+          branch,
+          semester,
+          password
+        });
+
+        if (isRegistered) {
+          showToast('Registration successful! Redirecting to login...', 'success');
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          showToast('This email is already registered. Please login or use a different email.', 'danger');
+          showInputError(document.getElementById('email'), 'Email address already exists');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

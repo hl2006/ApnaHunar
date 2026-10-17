@@ -1,0 +1,235 @@
+/* Responsive Styles for Apna Hunar */
+
+/* Tablet Screens (1024px and below) */
+@media screen and (max-width: 1024px) {
+  /* Landing page layouts */
+  .hero-grid {
+    gap: 30px;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .stats-grid {
+    gap: 20px;
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  /* Dashboard specific styles */
+  .sidebar {
+    transform: translateX(-100%);
+    width: 240px;
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+  
+  .widgets-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .dashboard-grid-2col {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .analytics-card.full-width {
+    grid-column: auto;
+  }
+}
+
+/* Mobile Screens (768px and below) */
+@media screen and (max-width: 768px) {
+  /* Navigation */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-body);
+    border-left: 1px solid var(--border-card);
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+    z-index: 1000;
+    transition: var(--transition);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .nav-links.active {
+    right: 0;
+  }
+  
+  /* Hero */
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 50px;
+  }
+  
+  .hero-desc {
+    margin: 0 auto 30px;
+  }
+  
+  .hero-buttons {
+    justify-content: center;
+  }
+  
+  .hero-image {
+    order: -1;
+  }
+  
+  .hero-image svg {
+    max-height: 300px;
+  }
+  
+  /* Stats */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .stat-card {
+    padding: 20px;
+  }
+  
+  /* Features */
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  /* Contact */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .contact-info {
+    text-align: center;
+  }
+  
+  .contact-details {
+    align-items: center;
+  }
+  
+  .contact-form {
+    padding: 25px;
+  }
+  
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+  
+  .footer-brand p {
+    margin: 15px auto 0;
+  }
+  
+  .footer-socials {
+    justify-content: center;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  /* Register & Login pages */
+  .register-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .auth-card {
+    padding: 25px 20px;
+  }
+  
+  /* Dashboard elements */
+  .dashboard-header {
+    padding: 0 20px;
+  }
+  
+  .header-search {
+    display: none; /* Hide main search bar on mobile headers, search inline where needed */
+  }
+  
+  .dashboard-content {
+    padding: 20px 15px;
+  }
+  
+  .widgets-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .skills-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .skills-filter-tabs {
+    order: 2;
+  }
+}
+
+/* Extra Small Devices (480px and below) */
+@media screen and (max-width: 480px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .theme-options-row {
+    flex-direction: column;
+  }
+  
+  .theme-option-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

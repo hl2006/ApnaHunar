@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apna Hunar - Track Your Skills Like a Pro</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 2rem;"></i>
+        <span class="text-gradient">Apna Hunar</span>
+      </a>
+      
+      <!-- Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="login.html" class="btn btn-secondary btn-sm" id="nav-btn-login">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm" id="nav-btn-register">Get Started</a>
+      </div>
+
+      <!-- Hamburger menu (Mobile) -->
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title">Track Your <br><span class="text-gradient">Skills</span> Like a Pro</h1>
+          <p class="hero-desc">
+            The ultimate portfolio dashboard for college students. Log coding progress, manage professional certificates, chart skill metrics, and trace internship stages—all stored locally in your browser.
+          </p>
+          <div class="hero-buttons">
+            <a href="register.html" class="btn btn-primary" id="hero-btn-start">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#features" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <!-- Premium Custom SVG Illustration -->
+          <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="50" y="80" width="400" height="320" rx="20" fill="url(#hero-svg-grad)" fill-opacity="0.1" stroke="url(#hero-svg-stroke)" stroke-width="2"/>
+            <rect x="70" y="110" width="160" height="110" rx="10" fill="#ffffff" fill-opacity="0.05" stroke="url(#hero-svg-stroke)" stroke-width="1.5" stroke-dasharray="2 2"/>
+            <rect x="250" y="110" width="180" height="110" rx="10" fill="#ffffff" fill-opacity="0.05" stroke="url(#hero-svg-stroke)" stroke-width="1.5"/>
+            <circle cx="150" cy="165" r="30" fill="url(#hero-svg-circle-grad)" />
+            <path d="M135 165L145 175L165 155" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="90" y1="240" x2="410" y2="240" stroke="url(#hero-svg-stroke)" stroke-width="1.5"/>
+            <!-- Skill Bars simulation -->
+            <rect x="70" y="270" width="160" height="40" rx="8" fill="#ffffff" fill-opacity="0.05" stroke="url(#hero-svg-stroke)" stroke-width="1"/>
+            <rect x="85" y="290" width="90" height="8" rx="4" fill="#cbd5e1" fill-opacity="0.3"/>
+            <rect x="85" y="290" width="70" height="8" rx="4" fill="#3b82f6"/>
+            
+            <rect x="250" y="270" width="180" height="100" rx="8" fill="#ffffff" fill-opacity="0.05" stroke="url(#hero-svg-stroke)" stroke-width="1"/>
+            <!-- Line Chart simulation -->
+            <path d="M270 340 L310 300 L350 320 L390 285 L410 300" stroke="url(#hero-svg-circle-grad)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="310" cy="300" r="4" fill="#8b5cf6"/>
+            <circle cx="390" cy="285" r="4" fill="#8b5cf6"/>
+
+            <!-- floating elements -->
+            <g transform="translate(420, 60)">
+              <rect x="0" y="0" width="50" height="50" rx="10" fill="url(#hero-svg-grad)" fill-opacity="0.2" stroke="url(#hero-svg-stroke)" stroke-width="1.5" />
+              <path d="M15 25H35M25 15V35" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(10, 360)">
+              <rect x="0" y="0" width="60" height="50" rx="10" fill="url(#hero-svg-grad)" fill-opacity="0.2" stroke="url(#hero-svg-stroke)" stroke-width="1.5" />
+              <path d="M18 20L25 28L42 16" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+
+            <defs>
+              <linearGradient id="hero-svg-grad" x1="50" y1="80" x2="450" y2="400" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#3b82f6"/>
+                <stop offset="1" stop-color="#8b5cf6"/>
+              </linearGradient>
+              <linearGradient id="hero-svg-stroke" x1="50" y1="80" x2="450" y2="400" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#60a5fa" stop-opacity="0.6"/>
+                <stop offset="1" stop-color="#a78bfa" stop-opacity="0.2"/>
+              </linearGradient>
+              <linearGradient id="hero-svg-circle-grad" x1="120" y1="135" x2="180" y2="195" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#3b82f6"/>
+                <stop offset="1" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid glass-card" style="border-radius: var(--radius-lg); padding: 40px 10px;">
+        <!-- Stat 1 -->
+        <div class="stat-card">
+          <div class="stat-number text-gradient" data-target="12450">0</div>
+          <div class="stat-label">Active Student Trackers</div>
+        </div>
+        <!-- Stat 2 -->
+        <div class="stat-card">
+          <div class="stat-number text-gradient" data-target="58700">0</div>
+          <div class="stat-label">Skills Cataloged</div>
+        </div>
+        <!-- Stat 3 -->
+        <div class="stat-card">
+          <div class="stat-number text-gradient" data-target="6950">0</div>
+          <div class="stat-label">Internships Managed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-subtitle text-gradient">Core System</h3>
+        <h2 class="section-title">Built For Student Success</h2>
+        <p style="color: var(--text-secondary);">Everything you need to showcase progress and organize milestones inside college life.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="glass-card feature-card">
+          <div class="feature-icon-wrapper bg-gradient">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h3>Skill Inventory</h3>
+          <p>Classify skills under categories, log expertise levels (Beginner to Advanced), and search/filter dynamically.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card feature-card">
+          <div class="feature-icon-wrapper bg-gradient" style="background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h3>Certificate Hub</h3>
+          <p>Secure credentials by uploading PNGs, JPGs or PDFs. Converts base64 file buffers to local assets with quick download.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card feature-card">
+          <div class="feature-icon-wrapper bg-gradient" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+            <i class="fa-solid fa-business-time"></i>
+          </div>
+          <h3>Internship Tracker</h3>
+          <p>Monitor industrial apprenticeships with linear status graphs, dates audits, and timelines mapping progress.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-card feature-card">
+          <div class="feature-icon-wrapper bg-gradient" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <h3>Visual Analytics</h3>
+          <p>Evaluate your technical depth with interactive doughnut charts and bar charts rendered dynamically using Chart.js.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-subtitle text-gradient">Testimonials</h3>
+        <h2 class="section-title">What Students Say</h2>
+        <p style="color: var(--text-secondary);">College seniors who used Apna Hunar to structure internship applications.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <!-- Testimonial 1 -->
+        <div class="glass-card testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-text">
+            "I used this portal to catalog my projects, web dev certifications, and summer internship stages. It made preparing for placements a breeze. Keeping it local meant no logins issues!"
+          </p>
+          <div class="testimonial-user">
+            <img class="testimonial-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'><rect width='50' height='50' fill='%233b82f6'/><text x='50%25' y='55%25' font-size='20' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>AR</text></svg>" alt="Aman Roy">
+            <div class="testimonial-info">
+              <h4>Aman Roy</h4>
+              <p>CSE Graduate, MIT</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="glass-card testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-text">
+            "The analytics dashboard with charts looks incredible. I love changing to dark mode when coding late. Storing certificate files as base64 renders perfectly."
+          </p>
+          <div class="testimonial-user">
+            <img class="testimonial-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'><rect width='50' height='50' fill='%238b5cf6'/><text x='50%25' y='55%25' font-size='20' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>SK</text></svg>" alt="Sneha K.">
+            <div class="testimonial-info">
+              <h4>Sneha Kapoor</h4>
+              <p>Electronics Engineering, VIT</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-subtitle text-gradient">Have Questions?</h3>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p style="color: var(--text-secondary);">Everything you need to know about setting up your Apna Hunar account.</p>
+      </div>
+
+      <div class="faq-list">
+        <!-- FAQ 1 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is my data stored securely online?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Apna Hunar operates completely inside your web browser. No student details are sent to external databases. Data is cached using HTML5 LocalStorage, providing complete offline privacy.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What happens if I clear my browser cookies?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Because the app relies on LocalStorage, clearing site cookies and cache will remove your stored profiles, skills, and timelines. We recommend backing up or avoiding resets in privacy sweeps.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is there a file upload size limit?</span>
+            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes. Browsers limit LocalStorage memory to roughly 5 megabytes. To prevent data corruption, Certificate uploads are restricted to a maximum size of 1.5 megabytes (1.5MB) per file.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-grid glass-card" style="border-radius: var(--radius-lg); overflow: hidden; padding: 0;">
+        <div class="contact-info bg-gradient" style="padding: 50px; color: #fff;">
+          <h2 style="font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 15px;">Get In Touch</h2>
+          <p style="opacity: 0.9; margin-bottom: 30px;">Have suggestions, feature requests, or encountered visual bugs? Drop us a line.</p>
+          
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon"><i class="fa-solid fa-envelope" style="color: var(--secondary);"></i></div>
+              <div>
+                <p style="font-weight: 600; opacity: 0.9; font-size: 0.9rem;">Email Address</p>
+                <p style="font-weight: 500;">support@apnahunar.edu</p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon"><i class="fa-solid fa-building-columns" style="color: var(--secondary);"></i></div>
+              <div>
+                <p style="font-weight: 600; opacity: 0.9; font-size: 0.9rem;">Office Location</p>
+                <p style="font-weight: 500;">Block C, Varsity Tech Labs</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" id="landing-contact-form" novalidate>
+          <h3>Send Feedback</h3>
+          <div class="form-group">
+            <label for="contact-name" class="form-label">Full Name *</label>
+            <input type="text" id="contact-name" class="form-control" placeholder="Aman Roy" required>
+            <div class="form-error-msg">Name is required</div>
+          </div>
+          <div class="form-group">
+            <label for="contact-email" class="form-label">Email Address *</label>
+            <input type="email" id="contact-email" class="form-control" placeholder="aman@college.edu" required>
+            <div class="form-error-msg">Please enter a valid email</div>
+          </div>
+          <div class="form-group">
+            <label for="contact-msg" class="form-label">Message *</label>
+            <textarea id="contact-msg" class="form-control" style="resize: none; height: 110px;" placeholder="Write message..." required></textarea>
+            <div class="form-error-msg">Message cannot be empty</div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+            <span class="text-gradient">Apna Hunar</span>
+          </a>
+          <p>A lightweight utility helping college graduates document academic progress and skill indices.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-links-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links-col">
+          <h4>Utility</h4>
+          <ul>
+            <li><a href="login.html">Sign In</a></li>
+            <li><a href="register.html">Sign Up</a></li>
+            <li><a href="#" id="footer-reset-data">Purge Cache</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Developers</h4>
+          <ul>
+            <li><a href="https://github.com" target="_blank">Docs</a></li>
+            <li><a href="https://google.com" target="_blank">API Guide</a></li>
+            <li><a href="#contact">Feedback</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Apna Hunar. MIT License. Offline Portfolio Utility.</p>
+        <p>Built with <i class="fa-solid fa-heart" style="color: var(--color-danger);"></i> using HTML5, CSS3, & JS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Dynamic scrolling headers
+      window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // 2. Mobile navbar hamburger toggle
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+      // Close mobile menu on clicking an items link
+      const links = document.querySelectorAll('.nav-link');
+      links.forEach(l => {
+        l.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          hamburger.classList.remove('active');
+        });
+      });
+
+      // 3. Update navbar login buttons and links dynamically if user logged in
+      const currentEmail = getCurrentUserEmail();
+      const loginBtn = document.getElementById('nav-btn-login');
+      const startBtn = document.getElementById('nav-btn-register');
+      const heroBtn = document.getElementById('hero-btn-start');
+
+      if (currentEmail) {
+        if (loginBtn) {
+          loginBtn.textContent = 'Dashboard';
+          loginBtn.href = 'dashboard.html';
+        }
+        if (startBtn) {
+          startBtn.style.display = 'none'; // Only keep Dashboard CTA
+        }
+        if (heroBtn) {
+          heroBtn.innerHTML = 'Go To Dashboard <i class="fa-solid fa-arrow-right"></i>';
+          heroBtn.href = 'dashboard.html';
+        }
+      }
+
+      // 4. FAQ Accordion Click Listeners
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          faqItems.forEach(i => i.classList.remove('active'));
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+
+      // 5. Stat Counter Animation on Viewport Scroll
+      const statsSection = document.querySelector('.stats');
+      const statNumbers = document.querySelectorAll('.stat-number');
+      let countersStarted = false;
+
+      const animateCounters = () => {
+        statNumbers.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          let count = 0;
+          // Determine scale increment relative to target
+          const increment = Math.ceil(target / 100);
+          
+          const updateCount = () => {
+            count += increment;
+            if (count >= target) {
+              counter.textContent = formatStatNumber(target) + '+';
+            } else {
+              counter.textContent = formatStatNumber(count);
+              setTimeout(updateCount, 15);
+            }
+          };
+          updateCount();
+        });
+      };
+
+      const formatStatNumber = (num) => {
+        if (num >= 1000) {
+          return (num / 1000).toFixed(1).replace('.0', '') + 'k';
+        }
+        return num;
+      };
+
+      // Intersection Observer to trigger counter animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !countersStarted) {
+            countersStarted = true;
+            animateCounters();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+
+      if (statsSection) observer.observe(statsSection);
+
+      // 6. Contact Form Validation
+      const contactForm = document.getElementById('landing-contact-form');
+      initLiveValidation(contactForm);
+      
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const isValid = validateFormOnSubmit(contactForm);
+        if (isValid) {
+          showToast('Thank you for your message! Feedback submitted successfully.', 'success');
+          contactForm.reset();
+        } else {
+          showToast('Form incomplete. Please check required fields.', 'warning');
+        }
+      });
+
+      // Footer reset details
+      document.getElementById('footer-reset-data').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Delete Database Cache', 'This clears all records from LocalStorage. Are you sure you want to reset?', () => {
+          resetAllData();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

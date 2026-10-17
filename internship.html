@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Tracker - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;">Internship Tracker</h2>
+        </div>
+        
+        <div class="header-actions">
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="header-profile-dropdown">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title text-gradient">Track Internships & Milestones</h2>
+          <p class="dashboard-subtitle">Log placement details, date contracts, status changes, and timeline phases.</p>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="skills-controls-row" style="justify-content: flex-end;">
+          <button class="btn btn-primary" id="open-internship-modal-btn">
+            Log Internship <i class="fa-solid fa-briefcase"></i>
+          </button>
+        </div>
+
+        <!-- Internship Details Grid Layout -->
+        <div class="dashboard-grid-2col" id="internship-layout-wrapper">
+          <!-- Left Column: List of Internships -->
+          <div style="display: flex; flex-direction: column; gap: 20px;" id="internships-list-container">
+            <!-- Loaded dynamically via JavaScript -->
+          </div>
+
+          <!-- Right Column: Focus Active Timeline details -->
+          <div id="internship-timeline-aside">
+            <div class="glass-card" style="padding:30px;">
+              <h3 class="card-title" style="margin-bottom: 25px;"><i class="fa-solid fa-timeline text-gradient"></i> Active Internship Timeline</h3>
+              
+              <div class="timeline-container" id="timeline-flow-list">
+                <!-- Loaded dynamically based on active internship selection -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Internship Modal -->
+  <div class="modal-overlay" id="intern-modal">
+    <div class="modal-container glass-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="intern-modal-title">Log Internship</h3>
+        <i class="fa-solid fa-xmark modal-close" id="close-intern-modal-btn"></i>
+      </div>
+      
+      <form id="intern-modal-form" novalidate>
+        <input type="hidden" id="edit-intern-id">
+        
+        <!-- Company Name -->
+        <div class="form-group">
+          <label for="intern-company" class="form-label">Company Name *</label>
+          <input type="text" id="intern-company" class="form-control" placeholder="e.g. Microsoft, Infosys" required>
+          <div class="form-error-msg">Company name is required</div>
+        </div>
+
+        <!-- Role -->
+        <div class="form-group">
+          <label for="intern-role" class="form-label">Job Role / Designation *</label>
+          <input type="text" id="intern-role" class="form-control" placeholder="e.g. Software Engineer Intern, Data Analyst" required>
+          <div class="form-error-msg">Role is required</div>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+          <label for="intern-start-date" class="form-label">Start Date *</label>
+          <input type="date" id="intern-start-date" class="form-control" required>
+          <div class="form-error-msg">Start date is required</div>
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+          <label for="intern-end-date" class="form-label">End Date *</label>
+          <input type="date" id="intern-end-date" class="form-control" required>
+          <div class="form-error-msg">End date is required</div>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label for="intern-status" class="form-label">Apprenticeship Status *</label>
+          <select id="intern-status" class="form-control" required>
+            <option value="" disabled selected>Select Status</option>
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <div class="form-error-msg">Please select current status</div>
+        </div>
+
+        <!-- Submit buttons -->
+        <div style="display: flex; gap: 10px; margin-top: 25px;">
+          <button type="submit" class="btn btn-primary" style="flex-grow: 1;" id="intern-form-submit-btn">Save Log</button>
+          <button type="button" class="btn btn-secondary" id="cancel-intern-modal-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      const modal = document.getElementById('intern-modal');
+      const modalForm = document.getElementById('intern-modal-form');
+      const addBtn = document.getElementById('open-internship-modal-btn');
+      const closeBtn = document.getElementById('close-intern-modal-btn');
+      const cancelBtn = document.getElementById('cancel-intern-modal-btn');
+      
+      let activeIndex = 0; // Index of internship focused in timeline
+
+      // Initialize validation
+      initLiveValidation(modalForm);
+
+      // Render Layout lists
+      renderInternships();
+
+      // 1. Sidebar logout action
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 2. Open Add Modal
+      addBtn.addEventListener('click', () => {
+        openInternshipModal();
+      });
+
+      // 3. Close Modal handlers
+      const closeModal = () => {
+        toggleModal('intern-modal', false);
+        modalForm.reset();
+        document.getElementById('edit-intern-id').value = '';
+        const inputs = modalForm.querySelectorAll('input, select');
+        inputs.forEach(input => clearInputError(input));
+      };
+      closeBtn.addEventListener('click', closeModal);
+      cancelBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // 4. Custom validation checks (dates logic) on form submit
+      modalForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const isValid = validateFormOnSubmit(modalForm);
+        if (!isValid) return;
+
+        const startVal = document.getElementById('intern-start-date').value;
+        const endVal = document.getElementById('intern-end-date').value;
+        
+        const start = new Date(startVal);
+        const end = new Date(endVal);
+
+        if (start >= end) {
+          showInputError(document.getElementById('intern-end-date'), 'End date must be after Start date');
+          showToast('End date cannot be prior to or equal to start date.', 'danger');
+          return;
+        }
+
+        const internId = document.getElementById('edit-intern-id').value;
+        const company = document.getElementById('intern-company').value.trim();
+        const role = document.getElementById('intern-role').value.trim();
+        const status = document.getElementById('intern-status').value;
+
+        if (!user.internships) user.internships = [];
+
+        if (internId) {
+          // EDIT existing
+          const idx = user.internships.findIndex(i => i.id === internId);
+          if (idx !== -1) {
+            user.internships[idx] = { id: internId, company, role, startDate: startVal, endDate: endVal, status };
+            addActivity(`Updated internship details at ${company}`);
+            showToast('Internship updated successfully!', 'success');
+          }
+        } else {
+          // ADD new
+          const newIntern = {
+            id: 'intern_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+            company,
+            role,
+            startDate: startVal,
+            endDate: endVal,
+            status
+          };
+          user.internships.push(newIntern);
+          addActivity(`Logged internship at ${company} as ${role}`);
+          showToast('Internship registered!', 'success');
+        }
+
+        saveCurrentUser(user);
+        closeModal();
+        renderInternships();
+      });
+
+      // 5. Route parameter actions check (?action=add)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('action') === 'add') {
+        openInternshipModal();
+      }
+
+      /**
+       * Render Internship lists and timeline sidebars
+       */
+      function renderInternships() {
+        const container = document.getElementById('internships-list-container');
+        container.innerHTML = '';
+
+        const list = user.internships || [];
+
+        if (list.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 50px 10px; color: var(--text-secondary);" class="glass-card">
+              <i class="fa-solid fa-business-time" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+              <h3>No Internships Logged</h3>
+              <p style="font-size: 0.95rem; margin-top: 5px;">Add your summer training or college placement milestones.</p>
+            </div>
+          `;
+          document.getElementById('internship-timeline-aside').style.display = 'none';
+          document.getElementById('internship-layout-wrapper').style.gridTemplateColumns = '1fr';
+          return;
+        }
+
+        // Show sidebar and layout grid correctly
+        document.getElementById('internship-timeline-aside').style.display = 'block';
+        document.getElementById('internship-layout-wrapper').style.gridTemplateColumns = '1.6fr 1fr';
+
+        list.forEach((intern, idx) => {
+          const card = document.createElement('div');
+          // Focus card class active matching timeline
+          card.className = `glass-card dashboard-internship-card ${idx === activeIndex ? 'active-focus-card' : ''}`;
+          card.style.cursor = 'pointer';
+          if (idx === activeIndex) {
+            card.style.border = '2.5px solid var(--primary)';
+          }
+
+          // Calculate percent
+          const percent = calculateCompletionPercent(intern);
+          const startStr = new Date(intern.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+          const endStr = new Date(intern.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+          // Badge configuration
+          let badgeClass = 'status-pending';
+          if (intern.status === 'Completed') badgeClass = 'status-completed';
+          if (intern.status === 'In Progress') badgeClass = 'status-progress';
+
+          card.innerHTML = `
+            <div class="internship-meta-row">
+              <div class="internship-main-info">
+                <h3>${escapeHTML(intern.company)}</h3>
+                <p>${escapeHTML(intern.role)}</p>
+              </div>
+              <div>
+                <span class="status-badge ${badgeClass}">${intern.status}</span>
+              </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="progress-container">
+              <div class="progress-info-row">
+                <span>Timeline Status</span>
+                <span>${percent}%</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 15px;">
+              <i class="fa-solid fa-calendar-days"></i> Dates: ${startStr} - ${endStr}
+            </p>
+
+            <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 15px; border-top: 1px solid var(--border-card); padding-top: 15px;">
+              <span class="skill-action-btn btn-edit-intern" data-id="${intern.id}"><i class="fa-solid fa-pen-to-square"></i> Edit</span>
+              <span class="skill-action-btn btn-delete-intern" data-id="${intern.id}" style="color:var(--color-danger);"><i class="fa-solid fa-trash-can"></i> Delete</span>
+            </div>
+          `;
+
+          // Handle focus click to load timeline
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.skill-action-btn')) return; // Avoid modal overlaps
+            activeIndex = idx;
+            renderInternships(); // Re-render to show outline border
+          });
+
+          // Edit button hook
+          card.querySelector('.btn-edit-intern').addEventListener('click', () => {
+            openInternshipModal(intern);
+          });
+
+          // Delete button hook
+          card.querySelector('.btn-delete-intern').addEventListener('click', () => {
+            showConfirmModal('Delete Internship Log', `Are you sure you want to delete internship log at "${intern.company}"?`, () => {
+              user.internships = user.internships.filter(i => i.id !== intern.id);
+              saveCurrentUser(user);
+              addActivity(`Deleted internship at ${intern.company}`);
+              showToast(`Internship log deleted.`, 'warning');
+              
+              // Reset active index if needed
+              if (activeIndex >= user.internships.length) {
+                activeIndex = Math.max(0, user.internships.length - 1);
+              }
+              renderInternships();
+            });
+          });
+
+          container.appendChild(card);
+        });
+
+        // Load timeline flow for active selection
+        renderTimelineFlow(list[activeIndex]);
+      }
+
+      /**
+       * Render right timeline checkpoints
+       */
+      function renderTimelineFlow(intern) {
+        const container = document.getElementById('timeline-flow-list');
+        container.innerHTML = '';
+
+        if (!intern) return;
+
+        const start = new Date(intern.startDate);
+        const end = new Date(intern.endDate);
+        const midTime = new Date(start.getTime() + (end.getTime() - start.getTime()) / 2);
+        const now = new Date();
+
+        const startStr = start.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        const midStr = midTime.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        const endStr = end.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+        // Phase 1: Onboard status check
+        let phase1Done = false;
+        let phase2Done = false;
+        let phase3Done = false;
+
+        if (intern.status === 'Completed') {
+          phase1Done = phase2Done = phase3Done = true;
+        } else if (intern.status === 'Not Started') {
+          phase1Done = phase2Done = phase3Done = false;
+        } else {
+          // In Progress checking relative to dates
+          if (now >= start) phase1Done = true;
+          if (now >= midTime) phase2Done = true;
+          if (now >= end) phase3Done = true;
+        }
+
+        // Timeline items construction
+        container.innerHTML = `
+          <!-- Phase 1 -->
+          <div class="timeline-event">
+            <div class="timeline-marker" style="background: ${phase1Done ? 'var(--color-success)' : 'var(--text-secondary)'}; border-color: var(--bg-body);"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">${startStr}</div>
+              <h4>Apprenticeship Onboarding</h4>
+              <p>Join the team at ${escapeHTML(intern.company)} as a ${escapeHTML(intern.role)}. Kickoff initial projects and workspace setup.</p>
+              <div style="font-size:0.75rem; color:${phase1Done ? 'var(--color-success)' : 'var(--text-secondary)'}; font-weight:600; margin-top:8px;">
+                <i class="${phase1Done ? 'fa-solid fa-circle-check' : 'fa-regular fa-clock'}"></i> ${phase1Done ? 'Onboarded' : 'Pending Start'}
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="timeline-event">
+            <div class="timeline-marker" style="background: ${phase2Done ? 'var(--color-success)' : 'var(--text-secondary)'}; border-color: var(--bg-body);"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">${midStr}</div>
+              <h4>Mid-term Progress Review</h4>
+              <p>Project deliverables review. Midway evaluation checkpoint on assigned programming modules.</p>
+              <div style="font-size:0.75rem; color:${phase2Done ? 'var(--color-success)' : 'var(--text-secondary)'}; font-weight:600; margin-top:8px;">
+                <i class="${phase2Done ? 'fa-solid fa-circle-check' : 'fa-regular fa-clock'}"></i> ${phase2Done ? 'Reviewed' : 'Pending Milestone'}
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="timeline-event">
+            <div class="timeline-marker" style="background: ${phase3Done ? 'var(--color-success)' : 'var(--text-secondary)'}; border-color: var(--bg-body);"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">${endStr}</div>
+              <h4>Apprenticeship Concluded</h4>
+              <p>Project demo submission, code integrations, feedback logging, and final certificate handovers.</p>
+              <div style="font-size:0.75rem; color:${phase3Done ? 'var(--color-success)' : 'var(--text-secondary)'}; font-weight:600; margin-top:8px;">
+                <i class="${phase3Done ? 'fa-solid fa-circle-check' : 'fa-regular fa-clock'}"></i> ${phase3Done ? 'Completed' : 'Pending Conclusion'}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      /**
+       * Calculate percent integer
+       */
+      function calculateCompletionPercent(intern) {
+        if (intern.status === 'Completed') return 100;
+        if (intern.status === 'Not Started') return 0;
+        
+        const start = new Date(intern.startDate);
+        const end = new Date(intern.endDate);
+        const now = new Date();
+        
+        if (isNaN(start) || isNaN(end) || start >= end) return 50;
+
+        if (now >= end) return 100;
+        if (now <= start) return 0;
+
+        const total = end - start;
+        const elapsed = now - start;
+        return Math.round((elapsed / total) * 100);
+      }
+
+      /**
+       * Open log/edit modal popup
+       */
+      function openInternshipModal(intern = null) {
+        if (intern) {
+          // Edit Mode
+          document.getElementById('intern-modal-title').textContent = 'Edit Internship';
+          document.getElementById('edit-intern-id').value = intern.id;
+          document.getElementById('intern-company').value = intern.company;
+          document.getElementById('intern-role').value = intern.role;
+          document.getElementById('intern-start-date').value = intern.startDate;
+          document.getElementById('intern-end-date').value = intern.endDate;
+          document.getElementById('intern-status').value = intern.status;
+          document.getElementById('intern-form-submit-btn').textContent = 'Update Log';
+        } else {
+          // Add Mode
+          document.getElementById('intern-modal-title').textContent = 'Log Internship';
+          document.getElementById('edit-intern-id').value = '';
+          document.getElementById('intern-company').value = '';
+          document.getElementById('intern-role').value = '';
+          document.getElementById('intern-start-date').value = '';
+          document.getElementById('intern-end-date').value = '';
+          document.getElementById('intern-status').value = '';
+          document.getElementById('intern-form-submit-btn').textContent = 'Save Log';
+        }
+        toggleModal('intern-modal', true);
+      }
+
+      /**
+       * HTML escape helper
+       */
+      function escapeHTML(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+    });
+  </script>
+</body>
+</html>

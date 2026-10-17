@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;">Account Settings</h2>
+        </div>
+        
+        <div class="header-actions">
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="header-profile-dropdown">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title text-gradient">Preferences & Tools</h2>
+          <p class="dashboard-subtitle">Configure application layouts, profiles shortcuts, and clean cache datastores.</p>
+        </div>
+
+        <!-- Settings List -->
+        <div class="settings-list">
+          <!-- Item 1: Theme selector -->
+          <div class="glass-card settings-item">
+            <div class="settings-item-header">
+              <i class="fa-solid fa-circle-half-stroke"></i>
+              <h3>Display Themes</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+              Select your interface color preset. Choosing Dark mode reduces eye strain during night hours.
+            </p>
+            <div class="theme-options-row">
+              <button class="theme-option-btn" id="btn-theme-light" data-theme="light">
+                <i class="fa-regular fa-sun" style="margin-right: 8px;"></i> Light Theme
+              </button>
+              <button class="theme-option-btn" id="btn-theme-dark" data-theme="dark">
+                <i class="fa-regular fa-moon" style="margin-right: 8px;"></i> Dark Theme
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 2: Profile Update shortcut -->
+          <div class="glass-card settings-item">
+            <div class="settings-item-header">
+              <i class="fa-solid fa-user-gear"></i>
+              <h3>Academic Profile Details</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+              Your bio, college branch status, initials avatar, and smartphone contact details.
+            </p>
+            <button class="btn btn-secondary" onclick="window.location.href='profile.html'">
+              Edit Profile <i class="fa-solid fa-user-pen"></i>
+            </button>
+          </div>
+
+          <!-- Item 3: Reset and logout utilities -->
+          <div class="glass-card settings-item" style="border: 1px dashed rgba(239, 68, 68, 0.45);">
+            <div class="settings-item-header" style="color: var(--color-danger);">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <h3 style="color: var(--color-danger);">Danger Zone</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+              Destructive actions. Resetting clears all skills logs, certificate images, and timelines from LocalStorage.
+            </p>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+              <button class="btn btn-secondary" id="settings-logout-btn">
+                Logout Session <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </button>
+              <button class="btn btn-danger" id="settings-reset-btn">
+                Reset All Application Data <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      const lightBtn = document.getElementById('btn-theme-light');
+      const darkBtn = document.getElementById('btn-theme-dark');
+
+      // Highlight active theme option initially
+      syncThemeButtons();
+
+      // Listen for custom theme updates to keep settings page synced
+      document.addEventListener('themechanged', () => {
+        syncThemeButtons();
+      });
+
+      // 1. Sidebar logout action
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 2. Light Theme click
+      lightBtn.addEventListener('click', () => {
+        setThemeOption('light');
+      });
+
+      // 3. Dark Theme click
+      darkBtn.addEventListener('click', () => {
+        setThemeOption('dark');
+      });
+
+      // 4. Logout action
+      document.getElementById('settings-logout-btn').addEventListener('click', () => {
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 5. Reset action (Purges LocalStorage Cache)
+      document.getElementById('settings-reset-btn').addEventListener('click', () => {
+        showConfirmModal(
+          'Delete Application Database',
+          'This action is irreversible. All user accounts, certificates, internships, and skill progress logs will be permanently deleted.',
+          () => {
+            resetAllData();
+          }
+        );
+      });
+
+      /**
+       * Highlight corresponding settings button
+       */
+      function syncThemeButtons() {
+        const isDark = document.body.classList.contains('dark-theme');
+        if (isDark) {
+          darkBtn.classList.add('active');
+          lightBtn.classList.remove('active');
+        } else {
+          lightBtn.classList.add('active');
+          darkBtn.classList.remove('active');
+        }
+      }
+
+      /**
+       * Invert preference and update localStorage
+       */
+      function setThemeOption(themeName) {
+        user.settings.theme = themeName;
+        saveCurrentUser(user);
+        addActivity(`Switched app theme to ${themeName}`);
+
+        // Call global function in app.js
+        applyTheme(themeName);
+        syncThemeButtons();
+        showToast(`Theme updated to ${themeName}!`, 'success');
+
+        // Fire custom event
+        const themeEvent = new CustomEvent('themechanged', { detail: { theme: themeName } });
+        document.dispatchEvent(themeEvent);
+      }
+    });
+  </script>
+</body>
+</html>

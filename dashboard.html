@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Apna Hunar</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- Loading Animation -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-graduation-cap text-gradient" style="font-size: 1.8rem;"></i>
+          <span class="text-gradient">Apna Hunar</span>
+        </a>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item active">
+          <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html"><i class="fa-solid fa-user-graduate"></i> Profile</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skills.html"><i class="fa-solid fa-code"></i> Skills</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="certificates.html"><i class="fa-solid fa-award"></i> Certificates</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="internship.html"><i class="fa-solid fa-business-time"></i> Internship</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <li class="sidebar-item" style="list-style: none;">
+          <a href="#" id="sidebar-logout-btn" style="color: var(--color-danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </li>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="dashboard-header">
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="header-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="global-search-bar" placeholder="Search skills, certs...">
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <!-- Theme Switcher -->
+          <button class="theme-switch theme-switch-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <!-- Notifications -->
+          <div class="header-btn" id="notif-bell-btn">
+            <i class="fa-solid fa-bell"></i>
+            <div class="badge-dot" id="notif-badge" style="display: none;"></div>
+          </div>
+
+          <!-- Profile info -->
+          <div class="header-profile-dropdown" onclick="window.location.href='profile.html'">
+            <img src="" alt="Student Profile" class="avatar-sm header-profile-avatar">
+            <div class="header-profile-info">
+              <span class="header-profile-name"></span>
+              <span class="header-profile-role"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Body Content -->
+      <div class="dashboard-content">
+        <!-- Title Row -->
+        <div class="dashboard-title-row">
+          <h2 class="dashboard-title">Welcome back, <span id="welcome-student-name" class="text-gradient">Student</span>!</h2>
+          <p class="dashboard-subtitle">Here is a quick look at your academic portfolio and internship records.</p>
+        </div>
+
+        <!-- 4 Metric Cards Row -->
+        <div class="widgets-grid">
+          <!-- Card 1: Total Skills -->
+          <div class="glass-card widget-card">
+            <div class="widget-info">
+              <h4>Total Skills</h4>
+              <div class="widget-value" id="val-total-skills">0</div>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);" id="val-skills-detail">Categorized logs</p>
+            </div>
+            <div class="widget-icon widget-blue">
+              <i class="fa-solid fa-code"></i>
+            </div>
+          </div>
+
+          <!-- Card 2: Certificates -->
+          <div class="glass-card widget-card">
+            <div class="widget-info">
+              <h4>Certificates</h4>
+              <div class="widget-value" id="val-total-certs">0</div>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);" id="val-certs-detail">Verified documents</p>
+            </div>
+            <div class="widget-icon widget-purple">
+              <i class="fa-solid fa-award"></i>
+            </div>
+          </div>
+
+          <!-- Card 3: Internship Status -->
+          <div class="glass-card widget-card">
+            <div class="widget-info">
+              <h4>Internship</h4>
+              <div class="widget-value" style="font-size: 1.1rem; line-height: 1.3; font-weight: 700; margin-top: 5px;" id="val-internship-status">None Active</div>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);" id="val-internship-company">No current role</p>
+            </div>
+            <div class="widget-icon widget-green" id="val-internship-icon-box">
+              <i class="fa-solid fa-briefcase"></i>
+            </div>
+          </div>
+
+          <!-- Card 4: Profile Completion -->
+          <div class="glass-card widget-card">
+            <div class="widget-info">
+              <h4>Profile Done</h4>
+              <div class="widget-value" id="val-profile-completion">0%</div>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">Core variables</p>
+            </div>
+            <!-- Circular Progress SVG -->
+            <div class="widget-circle-wrapper">
+              <svg class="widget-circle-svg">
+                <circle class="widget-circle-bg" cx="32.5" cy="32.5" r="28" />
+                <circle class="widget-circle-progress" cx="32.5" cy="32.5" r="28" id="svg-progress-circle" />
+              </svg>
+              <span class="widget-circle-text" id="svg-progress-text">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Column Grid Content -->
+        <div class="dashboard-grid-2col">
+          <!-- Left Column widgets -->
+          <div class="dashboard-left-widgets" style="display: flex; flex-direction: column; gap: 30px;">
+            <!-- Active Internship Progress Tracker -->
+            <div class="glass-card dashboard-internship-card">
+              <div class="internship-meta-row">
+                <div class="internship-main-info">
+                  <h3 id="dash-internship-company">No Active Internship</h3>
+                  <p id="dash-internship-role">Define your internship in the Internship tab</p>
+                </div>
+                <span class="status-badge status-pending" id="dash-internship-badge">Not Started</span>
+              </div>
+
+              <!-- Progress bar -->
+              <div class="progress-container">
+                <div class="progress-info-row">
+                  <span>Internship Completion</span>
+                  <span id="dash-internship-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" id="dash-internship-progress-bar"></div>
+                </div>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px;" id="dash-internship-dates-range"></p>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="glass-card" style="padding: 30px;">
+              <h3 class="card-title" style="margin-bottom: 20px;"><i class="fa-solid fa-bolt text-gradient"></i> Quick Actions</h3>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                <button class="btn btn-secondary" onclick="window.location.href='skills.html?action=add'" style="text-align: left; justify-content: flex-start;">
+                  <i class="fa-solid fa-plus-circle" style="color: var(--primary);"></i> Add New Skill
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='certificates.html?action=add'" style="text-align: left; justify-content: flex-start;">
+                  <i class="fa-solid fa-file-arrow-up" style="color: var(--secondary);"></i> Upload Certificate
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='internship.html?action=add'" style="text-align: left; justify-content: flex-start;">
+                  <i class="fa-solid fa-briefcase" style="color: var(--color-success);"></i> Update Internship
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='analytics.html'" style="text-align: left; justify-content: flex-start;">
+                  <i class="fa-solid fa-chart-pie" style="color: var(--color-info);"></i> View Analytics
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column widgets -->
+          <div class="dashboard-right-widgets">
+            <!-- Recent Activities -->
+            <div class="glass-card" style="padding: 30px; height: 100%;">
+              <div class="card-header-row">
+                <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left text-gradient"></i> Recent Activity</h3>
+                <a href="#" id="clear-activity-logs" style="font-size: 0.8rem; color: var(--text-secondary);"><i class="fa-solid fa-trash-can"></i> Clear</a>
+              </div>
+              
+              <div class="activity-list" id="dashboard-activity-list">
+                <!-- Javascript will load records here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (!user) return;
+
+      // 1. Set Welcome Name
+      document.getElementById('welcome-student-name').textContent = user.fullName.split(' ')[0];
+
+      // 2. Load Metric values
+      document.getElementById('val-total-skills').textContent = user.skills ? user.skills.length : 0;
+      document.getElementById('val-total-certs').textContent = user.certificates ? user.certificates.length : 0;
+
+      // Update widget details helper labels
+      if (user.skills && user.skills.length > 0) {
+        const topCat = getTopSkillCategory(user.skills);
+        document.getElementById('val-skills-detail').textContent = `Top: ${topCat}`;
+      }
+      if (user.certificates && user.certificates.length > 0) {
+        document.getElementById('val-certs-detail').textContent = `${user.certificates.length} verified docs`;
+      }
+
+      // 3. Profile Completion logic (8 variables)
+      const completionPercent = calculateProfileCompletion(user);
+      document.getElementById('val-profile-completion').textContent = `${completionPercent}%`;
+      
+      // Update SVG circle
+      const svgCircle = document.getElementById('svg-progress-circle');
+      const svgText = document.getElementById('svg-progress-text');
+      
+      const radius = 28;
+      const circumference = 2 * Math.PI * radius; // 175.92
+      
+      svgCircle.style.strokeDasharray = circumference;
+      const offset = circumference - (completionPercent / 100) * circumference;
+      
+      // Delay slightly for transition impact
+      setTimeout(() => {
+        svgCircle.style.strokeDashoffset = offset;
+        svgText.textContent = `${completionPercent}%`;
+      }, 300);
+
+      // 4. Internship Widget details
+      loadInternshipWidget(user);
+
+      // 5. Recent Activities logs
+      loadRecentActivities(user);
+
+      // 6. Sidebar logout click
+      document.getElementById('sidebar-logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Logout Session', 'Are you sure you want to logout from Apna Hunar?', () => {
+          logout();
+        });
+      });
+
+      // 7. Clear activity logs handler
+      document.getElementById('clear-activity-logs').addEventListener('click', (e) => {
+        e.preventDefault();
+        showConfirmModal('Clear History', 'Are you sure you want to clear your activity logs? This does not delete skills or certificates.', () => {
+          user.activities = [];
+          saveCurrentUser(user);
+          loadRecentActivities(user);
+          showToast('Activity logs cleared.', 'info');
+        });
+      });
+
+      // 8. Global search focus
+      const searchBar = document.getElementById('global-search-bar');
+      searchBar.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const query = searchBar.value.trim();
+          if (query) {
+            window.location.href = `skills.html?search=${encodeURIComponent(query)}`;
+          }
+        }
+      });
+
+      // 9. Alert bell simple notification popup
+      document.getElementById('notif-bell-btn').addEventListener('click', () => {
+        showToast(`You have 0 unread alerts. Your system is fully updated.`, 'info');
+      });
+    });
+
+    /**
+     * Compute profile completion score (out of 100)
+     */
+    function calculateProfileCompletion(user) {
+      let fieldsFilled = 0;
+      const fields = ['fullName', 'email', 'mobile', 'college', 'branch', 'semester', 'aboutMe', 'avatar'];
+      
+      fields.forEach(field => {
+        if (user[field] && user[field].toString().trim()) {
+          // If avatar, check if it's default or custom. For simplicity, just check if it exists
+          fieldsFilled++;
+        }
+      });
+      
+      return Math.round((fieldsFilled / fields.length) * 100);
+    }
+
+    /**
+     * Retrieve the category with the most skills
+     */
+    function getTopSkillCategory(skills) {
+      if (!skills || skills.length === 0) return 'None';
+      const map = {};
+      skills.forEach(s => {
+        map[s.category] = (map[s.category] || 0) + 1;
+      });
+      
+      let topCat = 'Programming';
+      let max = 0;
+      for (let cat in map) {
+        if (map[cat] > max) {
+          max = map[cat];
+          topCat = cat;
+        }
+      }
+      return topCat;
+    }
+
+    /**
+     * Load Internship widget details
+     */
+    function loadInternshipWidget(user) {
+      const activeIntern = user.internships ? user.internships.find(i => i.status === 'In Progress') || user.internships[0] : null;
+      
+      const compLabel = document.getElementById('val-internship-company');
+      const statLabel = document.getElementById('val-internship-status');
+      
+      const dashCompany = document.getElementById('dash-internship-company');
+      const dashRole = document.getElementById('dash-internship-role');
+      const dashBadge = document.getElementById('dash-internship-badge');
+      const dashPercent = document.getElementById('dash-internship-percent');
+      const dashProgressBar = document.getElementById('dash-internship-progress-bar');
+      const dashDatesRange = document.getElementById('dash-internship-dates-range');
+      
+      if (activeIntern) {
+        compLabel.textContent = activeIntern.company;
+        statLabel.textContent = activeIntern.role;
+        
+        dashCompany.textContent = activeIntern.company;
+        dashRole.textContent = `${activeIntern.role}`;
+        
+        // Status class setup
+        dashBadge.textContent = activeIntern.status;
+        dashBadge.className = 'status-badge';
+        if (activeIntern.status === 'Completed') {
+          dashBadge.classList.add('status-completed');
+        } else if (activeIntern.status === 'In Progress') {
+          dashBadge.classList.add('status-progress');
+        } else {
+          dashBadge.classList.add('status-pending');
+        }
+
+        // Calculate progress percentage
+        let percent = 0;
+        if (activeIntern.status === 'Completed') {
+          percent = 100;
+        } else if (activeIntern.status === 'Not Started') {
+          percent = 0;
+        } else {
+          // Calculate based on dates
+          const start = new Date(activeIntern.startDate);
+          const end = new Date(activeIntern.endDate);
+          const now = new Date();
+          
+          if (!isNaN(start) && !isNaN(end) && start < end) {
+            if (now >= end) {
+              percent = 100;
+            } else if (now <= start) {
+              percent = 0;
+            } else {
+              const totalTime = end - start;
+              const elapsed = now - start;
+              percent = Math.round((elapsed / totalTime) * 100);
+            }
+          } else {
+            percent = 50; // Fallback default
+          }
+        }
+        
+        dashPercent.textContent = `${percent}%`;
+        setTimeout(() => {
+          dashProgressBar.style.width = `${percent}%`;
+        }, 300);
+        
+        if (activeIntern.startDate && activeIntern.endDate) {
+          const startStr = new Date(activeIntern.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
+          const endStr = new Date(activeIntern.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
+          dashDatesRange.innerHTML = `<i class="fa-solid fa-calendar"></i> Duration: ${startStr} - ${endStr}`;
+        }
+      } else {
+        compLabel.textContent = 'No current role';
+        statLabel.textContent = 'None Active';
+        
+        dashCompany.textContent = 'No Active Internship';
+        dashRole.textContent = 'Define your internship in the Internship tab';
+        dashBadge.textContent = 'Not Started';
+        dashBadge.className = 'status-badge status-pending';
+        dashPercent.textContent = '0%';
+        dashProgressBar.style.width = '0%';
+        dashDatesRange.innerHTML = '';
+      }
+    }
+
+    /**
+     * Load recent activities log from storage
+     */
+    function loadRecentActivities(user) {
+      const listContainer = document.getElementById('dashboard-activity-list');
+      if (!listContainer) return;
+      listContainer.innerHTML = '';
+      
+      const activities = user.activities || [];
+      if (activities.length === 0) {
+        listContainer.innerHTML = `
+          <div style="text-align: center; padding: 30px 10px; color: var(--text-secondary);">
+            <i class="fa-solid fa-circle-nodes" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+            <p style="font-size: 0.9rem;">No recent activity logged. Add some skills or certificates to begin!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Limit to top 5 activities
+      const recentList = activities.slice(0, 5);
+      
+      recentList.forEach(act => {
+        const item = document.createElement('div');
+        item.className = 'activity-item';
+        
+        // Choose icons based on text
+        let iconClass = 'fa-solid fa-bolt';
+        if (act.text.toLowerCase().includes('skill')) iconClass = 'fa-solid fa-code';
+        if (act.text.toLowerCase().includes('certificate')) iconClass = 'fa-solid fa-award';
+        if (act.text.toLowerCase().includes('intern')) iconClass = 'fa-solid fa-briefcase';
+        if (act.text.toLowerCase().includes('profile')) iconClass = 'fa-solid fa-user-pen';
+        if (act.text.toLowerCase().includes('logged in')) iconClass = 'fa-solid fa-arrow-right-to-bracket';
+        if (act.text.toLowerCase().includes('theme')) iconClass = 'fa-solid fa-circle-half-stroke';
+        
+        const dateStr = formatActivityTime(act.timestamp);
+        
+        item.innerHTML = `
+          <div class="activity-icon">
+            <i class="${iconClass}"></i>
+          </div>
+          <div class="activity-info">
+            <div class="activity-text">${act.text}</div>
+            <div class="activity-time">${dateStr}</div>
+          </div>
+        `;
+        
+        listContainer.appendChild(item);
+      });
+    }
+
+    /**
+     * Format timestamp to pretty relative duration
+     */
+    function formatActivityTime(timestamp) {
+      const date = new Date(timestamp);
+      if (isNaN(date)) return 'Just now';
+      
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHrs = Math.floor(diffMins / 600);
+      
+      if (diffMins < 1) return 'Just now';
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffHrs < 24) return `${Math.floor(diffMins / 60)}h ago`;
+      
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+  </script>
+</body>
+</html>
